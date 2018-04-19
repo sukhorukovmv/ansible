@@ -1,0 +1,10 @@
+---
+- hosts: all 
+
+  tasks: 
+  
+  - name: add .vimrc
+    become: yes
+    copy: 
+      src=/home/maksim/Downloads/.vimrc
+      dest=/home/maksim/.vimrc
