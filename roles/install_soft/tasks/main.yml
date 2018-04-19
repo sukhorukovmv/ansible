@@ -1,0 +1,46 @@
+- include_vars: ../vars/list_soft.yml
+
+- name: add ppa repo
+  apt_repository:
+    repo: "{{ item.ppa_repo }}"
+  with_items: "{{ list_ppa }}"
+
+  #- name: update
+  # become: yes
+  # apt:
+  #  update-cache: yes
+  #  state: latest
+
+  #- name: apt update
+  #  apt: update_cache=yes cache_valid_time=3600
+  #  register: apt_result
+  #  until: apt_result|success
+  # retries: 3
+  # delay: 1
+  # sudo: yes
+  # ignore_errors: yes
+
+- name: retry if needed using command apt-get update
+  command: apt-get update
+  #  sudo: yes
+  #  when: apt_result|failed
+
+  #установка из репозиториев Ubuntu
+- name: install 
+  apt: 
+    name: "{{ item.name }}" 
+    state: "{{ item.state }}"
+  with_items: "{{list_soft}}"
+
+  #скачивание deb пакетов       
+- name: download deb
+  get_url:
+    url: "{{ item.url }}"
+    dest: /home/{{ item.user_name }}/Downloads/{{ item.name }}
+  with_items: "{{ list_url }}"
+
+  #установка из deb пакетов
+- name: install from deb
+  apt: 
+    deb: /home/{{item.user_name}}/Downloads/{{item.name}}
+  with_items: "{{list_url}}"

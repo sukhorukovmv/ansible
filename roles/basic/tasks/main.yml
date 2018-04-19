@@ -1,2 +1,0 @@
-- name: Installing Vim
-  apt: pkg=nmap state=latest
