@@ -11,11 +11,11 @@
       repo: "{{ item.ppa_repo }}"
     with_items: "{{ list_ppa }}"
 
-  # - name: update
-  #  become: yes
-  #  apt:
-  #    update-cache: yes
-  #    state: latest
+  - name: update
+    become: yes
+    apt:
+      update-cache: yes
+      state: latest
 
     #установка из репозиториев Ubuntu
   - name: install 
@@ -23,7 +23,6 @@
     apt: 
       name: "{{ item.name }}" 
       state: "{{ item.state }}"
-      update_cache: "{{ item.update_cache }}"
     with_items: "{{list_soft}}"
 
     #скачивание deb пакетов       

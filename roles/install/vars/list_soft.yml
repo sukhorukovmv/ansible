@@ -1,40 +1,31 @@
 --- 
-list_soft:
-  #  - name: racket
-  #  state: latest
-  #  update_cache: yes
-  - name: openvpn
-    state: latest
-    update_cache: yes
-  - name: network-manager-openvpn
-    state: latest
-    update_cache: no
-  - name: network-manager-openvpn-gnome
-    state: latest
-    update_cache: no
-  - name: vim
-    state: latest
-    update_cache: no
-  - name: htop
-    state: latest
-    update_cache: no
-  - name: virtualbox
-    state: latest
-    update_cache: no
-  - name: vagrant
-    state: latest
-    update_cache: no
-  - name: openssh-server
-    state: latest
-    update_cache: no
-
-list_url:
-  - name: chrome
-    url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    user_name: maksim  
-
 list_ppa:
   - name: racker
     ppa_repo: ppa:plt/racket
 
+list_soft:
+  - name: racket
+    state: latest
+  - name: openvpn
+    state: present 
+  - name: network-manager-openvpn
+    state: latest
+  - name: network-manager-openvpn-gnome
+    state: latest
+  - name: vim
+    state: latest
+  - name: htop
+    state: latest
+  - name: virtualbox
+    state: latest
+  - name: vagrant
+    state: latest
+  - name: openssh-server
+    state: latest
+  - name: build-essential #gcc make g++
+    state: latest
 
+list_url:
+  - name: chrome #название под которым сохранится deb
+    url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    user_name: maksim  # сохранит в домашнюю директорию пользователь 
