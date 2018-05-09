@@ -2,5 +2,5 @@
 - hosts: all 
   become: yes
   roles:
-  - ansible-role-docker-master2
-    # - install_soft
+    #  - ansible-role-docker-master2
+    - install_soft

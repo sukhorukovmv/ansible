@@ -21,9 +21,15 @@
   # ignore_errors: yes
 
 - name: retry if needed using command apt-get update
+  become: yes
   command: apt-get update
+  ignore_errors: yes  #костыль
   #  sudo: yes
   #  when: apt_result|failed
+
+  # - name: update cache
+  # apt:
+  #   update_cache: yes
 
   #установка из репозиториев Ubuntu
 - name: install 
