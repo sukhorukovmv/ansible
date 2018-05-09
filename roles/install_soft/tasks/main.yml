@@ -4,6 +4,7 @@
   apt_repository:
     repo: "{{ item.ppa_repo }}"
   with_items: "{{ list_ppa }}"
+  ignore_errors: yes 
 
   #- name: update
   # become: yes

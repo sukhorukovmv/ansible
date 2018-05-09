@@ -2,7 +2,9 @@
 list_ppa:
   - name: racker  #Название программы которую требуется установить из репозитория
     ppa_repo: ppa:plt/racket
-
+  - name: ruby
+    ppa_repo: ppa:brightbox/ruby-ng
+#После добавления репозитория необходимо написать название программы в list_soft 
 list_soft:
   - name: racket
     state: latest
@@ -25,6 +27,8 @@ list_soft:
   - name: build-essential #gcc make g++
     state: latest
   - name: ssh
+    state: latest
+  - name: ruby
     state: latest
 
 list_url:
