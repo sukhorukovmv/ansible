@@ -1,0 +1,15 @@
+[user]
+	email = sukhorukov.maksim95@gmail.com
+	name = Sukhorukov Maksim
+
+[color]
+    ui = auto
+
+[alias]
+    up = pull --rebase
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    hist = log --graph --decorate --oneline
+    lt = describe --abbrev=0 --tags

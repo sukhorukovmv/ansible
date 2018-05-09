@@ -1,0 +1,13 @@
+- include_vars: ../vars/list_users.yml
+
+- name: add .vimrc
+  copy: 
+    src: ../files/.vimrc
+    dest: /home/{{item.name}}/.vimrc
+  with_items: "{{list_user}}"
+
+- name: add .gitconfig
+  copy:
+    src: ../files/.gitconfig
+    dest: /home/{{item.name}}/.gitconfig
+  with_items: "{{list_user}}"
