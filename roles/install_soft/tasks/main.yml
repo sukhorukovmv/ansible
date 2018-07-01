@@ -43,11 +43,11 @@
 - name: download deb
   get_url:
     url: "{{ item.url }}"
-    dest: /home/{{ item.user_name }}/Downloads/{{ item.name }}
+    dest: /home/{{ item.user_name }}/{{ item.name }}
   with_items: "{{ list_url }}"
 
   #установка из deb пакетов
 - name: install from deb
   apt: 
-    deb: /home/{{item.user_name}}/Downloads/{{item.name}}
+    deb: /home/{{item.user_name}}/{{item.name}}
   with_items: "{{list_url}}"

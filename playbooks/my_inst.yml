@@ -3,4 +3,4 @@
   become: yes
   roles:
     - add_config
-      #    - install_soft
+    - install_soft

@@ -24,7 +24,9 @@ list_soft:
     state: latest
   - name: openssh-server
     state: latest
-  - name: build-essential #gcc make g++
+  - name: build-essential #gcc make g++ для установки nvm
+    state: latest
+  - name: libssl-dev  #для установки nvm
     state: latest
   - name: ssh
     state: latest
@@ -32,9 +34,9 @@ list_soft:
     state: latest
 
 list_url:
-  #  - name: chrome #название под которым сохранится deb
-  #  url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  #  user_name: maksim  # сохранит в домашнюю директорию пользователь 
-  - name: chrome #32 битная версия
-    url: http://alpinefile-d.ru/downloadz/Linux/google-chrome-stable_current_i386.deb
-    user_name: maksim
+  - name: chrome #название под которым сохранится deb
+    url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    user_name: maksim  # сохранит в домашнюю директорию пользователь 
+ # - name: chrome #32 битная версия
+ #   url: http://alpinefile-d.ru/downloadz/Linux/google-chrome-stable_current_i386.deb
+ #   user_name: maksim
