@@ -2,12 +2,17 @@
 
 - name: add .vimrc
   copy: 
-    src: ../files/.vimrc
-    dest: /home/{{item.name}}/.vimrc
-  with_items: "{{list_user}}"
+    src: ../files/vimrc
+    dest: ~/.vimrc
+    #  with_items: "{{list_user}}"
 
 - name: add .gitconfig
   copy:
     src: ../files/.gitconfig
-    dest: /home/{{item.name}}/.gitconfig
-  with_items: "{{list_user}}"
+    dest: ~/.gitconfig
+    # with_items: "{{list_user}}"
+
+- name: add .tmux.conf
+  copy:
+    src: ../files/.tmux.conf
+    dest: ~/.tmux.conf

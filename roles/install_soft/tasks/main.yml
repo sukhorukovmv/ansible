@@ -22,7 +22,7 @@
   # ignore_errors: yes
 
 - name: retry if needed using command apt-get update
-  become: yes
+  #  become: yes
   command: apt-get update
   ignore_errors: yes  #костыль
   #  sudo: yes

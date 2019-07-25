@@ -6,30 +6,63 @@ list_ppa:
     ppa_repo: ppa:brightbox/ruby-ng
 #После добавления репозитория необходимо написать название программы в list_soft 
 list_soft:
+  - name: tmux
+    state: latest 
+
   - name: racket
     state: latest
+
+  - name: python
+    state: latest
+
+  - name: python3
+    state: latest
+
+  - name: python-pip
+    state: latest
+
+  - name: python3-pip
+    state: latest
+
+  - name: gnome-tweak-tool
+    state: latest
+
+  - name: virtualenv
+    state: latest
+
   - name: openvpn
     state: present 
+
   - name: network-manager-openvpn
     state: latest
+
   - name: network-manager-openvpn-gnome
     state: latest
+
   - name: vim
     state: latest
+
   - name: htop
     state: latest
+
   - name: virtualbox
     state: latest
+
   - name: vagrant
     state: latest
+
   - name: openssh-server
     state: latest
+
   - name: build-essential #gcc make g++ для установки nvm
     state: latest
+
   - name: libssl-dev  #для установки nvm
     state: latest
+
   - name: ssh
     state: latest
+
   - name: ruby
     state: latest
 

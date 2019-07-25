@@ -1,0 +1,108 @@
+BOX_IMAGE = "ubuntu/xenial64" #ubuntu 16.04 for virtualbox
+#BOX_IMAGE = "peru/ubuntu-16.04-server-amd64" #ubuntu 16.04 for libvirt and virtual box 
+#vagrant box add peru/ubuntu-16.04-server-amd64 --provider=libvirt
+#vagrant up --provider=libvirt #run machines with kvm
+VAGRANTFILE_API_VERSION = "2"
+
+$ipRts="192.168.102.2"
+$gwRts="192.168.102.1"
+$netmaskRts="255.255.255.0"
+$ipNbn="192.168.105.2"
+$gwNbn="192.168.105.1"
+$netmaskNbn="255.255.255.0"
+$gwNetAdms="192.168.104.1"
+$netmaskNetAdms="255.255.255.0"
+
+users = [
+    { :hostname => 'smv', :userName => 'maksim', :ip => '192.168.104.2', :netmask => $netmaskNetAdms },
+    { :hostname => 'lkv', :userName => 'kostya', :ip => '192.168.104.3', :netmask => $netmaskNetAdms }
+]
+
+providers = [
+    { :provName => 'nbn', :userName => 'prov', :gw => $gwNbn, :netmask => $netmaskNbn },
+    { :provName => 'rts', :userName => 'prov', :gw => $gwRts, :netmask => $netmaskRts }
+]
+
+#required_plugins = %w(vagrant-libvirt vagrant-mutate) #plugins for vagrant, for correct work install boxing  
+
+#plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+#if not plugins_to_install.empty?
+#    puts "Installing plugins: #{plugins_to_install.join(' ')}"
+#    if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+#        exec "vagrant #{ARGV.join(' ')}"
+#    else
+#        abort "Installation of one or more plugins has failed. Aborting."
+#    end
+#end
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+#    config.vm.define "mab" do |subconfig|
+#        subconfig.vm.box = BOX_IMAGE
+#        subconfig.vm.hostname = "mab"
+#        subconfig.vm.network "private_network", ip: $ipRts, netmask: $netmaskRts
+#        subconfig.vm.provision "shell", run: "always", inline: "#{renameNetworkInterface($ipRts, "rts")}"
+#
+#        subconfig.vm.network "private_network", ip: $ipNbn, network: $netmaskNbn
+#        subconfig.vm.provision "shell", run: "always", inline: "#{renameNetworkInterface($ipNbn, "nbn")}"
+#
+#        subconfig.vm.network "private_network", ip: $gwNetAdms, network: $netmaskNetAdms
+#        subconfig.vm.provision "shell", run: "always", inline: "#{renameNetworkInterface($gwNetAdms, "local")}"
+#
+#        subconfig.vm.provision "file", source: "./check_gateways.sh", destination: "check_gateways.sh"
+#        subconfig.vm.provision "file", source: "./firewall_mab", destination: "firewall_mab"
+#        subconfig.vm.provision "file", source: "./routing_mab", destination: "routing_mab"
+#
+#        subconfig.vm.provision "shell", run: "always", inline: <<-SHELL
+#            apt-get update
+#            apt-get -y upgrade 
+#            apt-get install -y htop vim traceroute mtr tcpdump iptables
+#            bash /home/vagrant/firewall_mab
+#            bash /home/vagrant/routing_mab
+#            ip route replace default via #{$gwNbn}
+#            sysctl -w net.ipv4.ip_forward=1
+#        SHELL
+#
+#    end
+
+    #create users 
+    users.each do |user|
+        config.vm.define user[:userName] do |userconfig|
+            userconfig.vm.box = BOX_IMAGE
+            userconfig.vm.hostname = user[:hostname]
+            userconfig.vm.network "private_network", ip: user[:ip], netmask: user[:netmask]
+
+#            userconfig.vm.provision "shell", run: "always", inline: <<-SHELL
+#                apt-get update
+#                apt-get -y upgrade 
+#                apt-get install -y traceroute mtr 
+#                ip route replace default via #{$gwNetAdms}
+#                sysctl -w net.ipv4.ip_forward=1
+#            SHELL
+            config.vm.provision "ansible" do |ansible|
+                ansible.playbook = "../playbooks/my_inst.yml"
+            end
+        end
+    end
+
+#    providers.each do |prov|
+#        config.vm.define prov[:provName] do |provconfig|
+#            provconfig.vm.box = BOX_IMAGE
+#            provconfig.vm.hostname = prov[:provName]
+#            provconfig.vm.network "private_network", ip: prov[:gw], netmask: prov[:netmask]
+#            provconfig.vm.provision "shell", run: "always", inline: "#{renameNetworkInterface(prov[:gw], "gw" + prov[:provName])}"
+#            #provconfig.vm.provision "shell", run: "always", inline: "#{renameNetworkInterface($ipTemplateForMainInterfaceInternet, "net")}"
+#            #turn on forwarding
+#            provconfig.vm.provision "shell", run: "always", inline: "sudo sysctl -w net.ipv4.ip_forward=1"
+#        end
+#    end
+end
+
+def renameNetworkInterface(ipSearch, newName) 
+    "oldName=`ip -oneline addr list | grep #{ipSearch} | awk '{print $2}'`
+    ip link set $oldName down
+    ip link set $oldName name #{newName}
+    ip link set #{newName} up
+    unset oldName"
+end
+
