@@ -2,6 +2,7 @@ BOX_IMAGE = "ubuntu/xenial64" #ubuntu 16.04 for virtualbox
 #BOX_IMAGE = "peru/ubuntu-16.04-server-amd64" #ubuntu 16.04 for libvirt and virtual box 
 #vagrant box add peru/ubuntu-16.04-server-amd64 --provider=libvirt
 #vagrant up --provider=libvirt #run machines with kvm
+#vagrant plugin expunge  #delete all users plugins
 VAGRANTFILE_API_VERSION = "2"
 
 $ipRts="192.168.102.2"
@@ -15,7 +16,7 @@ $netmaskNetAdms="255.255.255.0"
 
 users = [
     { :hostname => 'smv', :userName => 'maksim', :ip => '192.168.104.2', :netmask => $netmaskNetAdms },
-    { :hostname => 'lkv', :userName => 'kostya', :ip => '192.168.104.3', :netmask => $netmaskNetAdms }
+#    { :hostname => 'lkv', :userName => 'kostya', :ip => '192.168.104.3', :netmask => $netmaskNetAdms }
 ]
 
 providers = [
@@ -23,17 +24,17 @@ providers = [
     { :provName => 'rts', :userName => 'prov', :gw => $gwRts, :netmask => $netmaskRts }
 ]
 
-#required_plugins = %w(vagrant-libvirt vagrant-mutate) #plugins for vagrant, for correct work install boxing  
+required_plugins = %w(vagrant-libvirt vagrant-mutate) #plugins for vagrant, for correct work install boxing  
 
-#plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
-#if not plugins_to_install.empty?
-#    puts "Installing plugins: #{plugins_to_install.join(' ')}"
-#    if system "vagrant plugin install #{plugins_to_install.join(' ')}"
-#        exec "vagrant #{ARGV.join(' ')}"
-#    else
-#        abort "Installation of one or more plugins has failed. Aborting."
-#    end
-#end
+plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+if not plugins_to_install.empty?
+    puts "Installing plugins: #{plugins_to_install.join(' ')}"
+    if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+        exec "vagrant #{ARGV.join(' ')}"
+    else
+        abort "Installation of one or more plugins has failed. Aborting."
+    end
+end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -80,7 +81,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #                sysctl -w net.ipv4.ip_forward=1
 #            SHELL
             config.vm.provision "ansible" do |ansible|
-                ansible.playbook = "../playbooks/my_inst.yml"
+                ansible.playbook = "../my_inst.yml"
             end
         end
     end

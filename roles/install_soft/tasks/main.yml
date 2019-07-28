@@ -37,17 +37,17 @@
   apt: 
     name: "{{ item.name }}" 
     state: "{{ item.state }}"
-  with_items: "{{list_soft}}"
+  with_items: "{{ list_soft }}"
 
   #скачивание deb пакетов       
 - name: download deb
   get_url:
     url: "{{ item.url }}"
-    dest: /home/{{ item.user_name }}/{{ item.name }}
+    dest: /tmp/{{ item.name }}
   with_items: "{{ list_url }}"
 
   #установка из deb пакетов
 - name: install from deb
   apt: 
-    deb: /home/{{item.user_name}}/{{item.name}}
-  with_items: "{{list_url}}"
+    deb: /tmp/{{ item.name }}
+  with_items: "{{ list_url }}"

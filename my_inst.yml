@@ -1,0 +1,7 @@
+---
+- hosts: all 
+  become: yes
+  roles:
+    - install_python_for_ansible
+    #    - add_config
+    #- install_soft

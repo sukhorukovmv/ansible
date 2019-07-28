@@ -1,18 +1,18 @@
 - include_vars: ../vars/list_users.yml
 
-- name: add .vimrc
+- name: add vimrc
   copy: 
     src: ../files/vimrc
     dest: ~/.vimrc
     #  with_items: "{{list_user}}"
 
-- name: add .gitconfig
+- name: add gitconfig
   copy:
-    src: ../files/.gitconfig
+    src: ../files/gitconfig
     dest: ~/.gitconfig
     # with_items: "{{list_user}}"
 
-- name: add .tmux.conf
+- name: add tmux.conf
   copy:
-    src: ../files/.tmux.conf
+    src: ../files/tmux.conf
     dest: ~/.tmux.conf
