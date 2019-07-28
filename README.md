@@ -1,6 +1,6 @@
-#Ansible
+# Ansible
 
-##Установка последней версии ansible в ubuntu
+## Установка последней версии ansible в ubuntu
 ```
     sudo apt-add-repository ppa:ansible/ansible
     sudo apt-get update
@@ -8,44 +8,45 @@
 ```
 
 ## Полезные команды
-####Ping серверов
+#### Ping серверов
 ```
     ansible -i <inventory file> <group> -m ping
 ```
-####Пример использования
+#### Пример использования
 ```
     ansible -i inventory/localhost.ini all -m ping
 ```
-####Информация о сервере
+#### Информация о сервере
+##### Выводит информацию о сервере в переменных, которые можно использовать в дальнейшей работе.
 ```
     ansible all -m setup
 ```
-####Запустить shell команду
+#### Запустить shell команду
 ```
     ansible all -m shell -a "uptime"
     ansible all -m command -a "uptime" #запускает не через shell, соответсвенно переменных окружения не будет
 ```
-####Копирование файлов
+#### Копирование файлов
 ```
     ansible all -m copy -a "src=file.txt dest=/home mode=777" -b
     -b - запуск из под sudo
 ``` 
-####Удаление файлов
+#### Удаление файлов
 ```
     ansible all -m file -a "path=/home/file.txt         state=absent" -b
 ```
-####Скачивание файлов
+#### Скачивание файлов
 ```
 ansible all -m get_url -a "url=<> dest=/home" -b
 Проверка коннекта
 ansible all -m uri -a "url=<> return_content=yes"
 ```
-####Просмотр списка серверов и их переменных
+#### Просмотр списка серверов и их переменных
 ```
     ansible-inventory --list
 ``` 
 
-##Handlers
+## Handlers
 
     handlers:
     - name: Restart Apache
@@ -57,7 +58,7 @@ ansible all -m uri -a "url=<> return_content=yes"
       copy: src={{ source_file }} dest={{ destin_file }} mode=0555
       notify: Restart Apache
 
-##Запуск playbook
+## Запуск playbook
 ```
     ansible-playbook playbooks/my_inst.yml -i inventory/localhost.ini
 ```
