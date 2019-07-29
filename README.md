@@ -62,6 +62,10 @@ ansible all -m uri -a "url=<> return_content=yes"
 ```
     ansible-playbook playbooks/my_inst.yml -i inventory/localhost.ini
 ```
- 
+
+## Ansible-galaxy
+```
+    ansible-galaxy init <name_role> - инициализация ansible роли
+```
 
 
