@@ -1,0 +1,18 @@
+---
+
+- name: Add ppa repository
+  apt_repository:
+    repo: "{{ php__apt_repository }}"
+    update_cache: true
+  ignore_errors: yes 
+
+- name: Install PHP
+  apt:
+    name: "php{{ php__version }}"
+    state: "{{ php__state }}"
+
+- name: Install PHP modules
+  apt:
+    name: "{{ php__modules }}"
+
+

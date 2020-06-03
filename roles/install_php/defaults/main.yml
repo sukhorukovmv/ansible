@@ -1,0 +1,19 @@
+---
+
+php__version: "7.3"
+
+php__state: "present"
+php__modules_state: "present"
+php__apt_repository: "ppa:ondrej/php"
+
+
+php__modules:
+  - "php{{ php__version }}-curl"
+  - "php{{ php__version }}-xml"
+  - "php{{ php__version }}-mysql"
+  - "php{{ php__version }}-mbstring"
+  - "php{{ php__version }}-gd"
+  - "php{{ php__version }}-dev"
+  - "php-pear"
+
+

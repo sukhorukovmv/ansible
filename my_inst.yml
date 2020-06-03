@@ -1,7 +1,69 @@
 ---
-- hosts: all 
+#- hosts: k8s
+ # remote_user: sukhorukovmv
+ # become: yes
+ # roles:
+ #   - add_users
+ #   - install_python_for_ansible
+ #   - install_docker
+ #   - install_soft
+    # - install_php
+    # - ansible-role-composer
+    #- install_python_for_ansible
+      #- add_config
+
+## master01 192.168.253.3
+## worknode01 192.168.253.2
+#
+- hosts: k8s-worknodes
+  remote_user: sukhorukovmv
   become: yes
+  tasks:
+    - debug:
+        msg: "before we run our role"
+
+#lsb_release -a check ubuntu version
+#uname -a check core version
   roles:
-    - install_python_for_ansible
-    #    - add_config
-    #- install_soft
+    - role: add_users
+      vars:
+        user_groups: [docker, sudo]
+        user_name: "sukhorukovmv"
+        user_shell: "/bin/bash"
+        user_generate_ssh_key: False
+        user_local_ssh_key_path: "~/.ssh/id_rsa.pub"
+        user_enable_passwordless_sudo: True
+    - role: install_python_for_ansible
+      #    - role: install_docker
+
+  tasks:
+    - debug:
+        msg: "before we run our role"
+
+- hosts: k8s-master
+  remote_user: sukhorukovmv
+  become: yes
+  tasks:
+    - debug:
+        msg: "before we run our role"
+
+#lsb_release -a check ubuntu version
+#uname -a check core version
+  roles:
+    - role: add_users
+      vars:
+        user_groups: [docker, sudo]
+        user_name: "sukhorukovmv"
+        user_shell: "/bin/bash"
+        user_generate_ssh_key: False
+        user_local_ssh_key_path: "~/.ssh/id_rsa.pub"
+        user_enable_passwordless_sudo: True
+    - role: install_python_for_ansible
+      #    - role: install_docker
+
+  tasks:
+    - debug:
+        msg: "before we run our role"
+    - name: install git configs
+      command: git clone https://github.com/rjeka/kubernetes-ceph-percona.git
+

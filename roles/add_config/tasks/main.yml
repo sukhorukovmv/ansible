@@ -4,15 +4,18 @@
   copy: 
     src: ../files/vimrc
     dest: ~/.vimrc
-    #  with_items: "{{list_user}}"
 
 - name: add gitconfig
   copy:
     src: ../files/gitconfig
     dest: ~/.gitconfig
-    # with_items: "{{list_user}}"
 
 - name: add tmux.conf
   copy:
     src: ../files/tmux.conf
     dest: ~/.tmux.conf
+    
+- name: add tmux.conf.local
+  copy:
+    src: ../files/tmux.conf.local
+    dest: ~/.tmux.conf.local

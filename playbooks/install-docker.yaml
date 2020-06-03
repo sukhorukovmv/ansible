@@ -1,0 +1,6 @@
+
+---
+- hosts: iemk-test
+  become: yes
+  roles:
+    - install_docker

@@ -68,4 +68,17 @@ ansible all -m uri -a "url=<> return_content=yes"
     ansible-galaxy init <name_role> - инициализация ansible роли
 ```
 
+## Ansible-vault
+ansible-vault create <file_name>
+ansible-vault view <file_name>
+ansible-vault edit <file_name>
+ansible-vault rekey <file_name>
+encrypt 
+decript
+Запустит зашифрованный playbook
+ansible-playbook playbook_vault.yml --ask-vault-pass
+Хранение пароля в файле 
+vim mypass.txt 
+ansible-playbook playbook_vault.yml --vault-password-file mypass.txt
+
 
